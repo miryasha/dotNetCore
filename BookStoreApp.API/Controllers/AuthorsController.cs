@@ -51,24 +51,24 @@ namespace BookStoreApp.API.Controllers
         }
 
 
-        // GET: api/Authors/name
-        //[HttpGet("{name}")]
-        //public async Task<ActionResult<Author>> GetAuthorByName(string name, ActionResult<Author> author)
+        //// GET: api/Authors/firstName
+        //[HttpGet("{firstName}")]
+        //public async Task<ActionResult<Author>> GetByName(string firstName)
         //{
         //    if (_context.Authors == null)
         //    {
         //        return NotFound();
         //    }
-        //    var user = name;
+        //    // var user = firstName;
         //    var author = await _context.Authors
-        //        .FromSqlRaw($"Select * FROM [BookStoreDb].[dbo].[Authors] WHERE FirstName =  {user};").ToListAsync();
-        //    // var author = await _context.Authors.FromSqlRaw(string sql:$"Select * FROM [BookStoreDb].[dbo].[Authors];");
+        //        .FromSqlRaw($"Select * FROM [BookStoreDb].[dbo].[Authors] WHERE FirstName =  {firstName};").ToListAsync();
+        //    Console.WriteLine(author);
         //    if (author == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return author;
+        //   // return author;
         //}
 
         // PUT: api/Authors/5
