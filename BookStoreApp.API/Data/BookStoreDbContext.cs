@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +52,62 @@ public partial class BookStoreDbContext : IdentityDbContext<ApiUser>
                 .HasForeignKey(d => d.AuthorId)
                 .HasConstraintName("FK_Books_ToTable");
         });
+
+        modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole
+            {
+                Name = "User", 
+                NormalizedName = "USER", 
+                Id = "78713bd4-00af-4a34-97f7-c2953203208b"
+            }, 
+            new IdentityRole
+            {
+                Name = "Administrator", 
+                NormalizedName = "ADMINISTRATOR",
+                Id = "207d3c67-4914-4cc7-8e18-00d4c786adc5"
+            }
+            );
+
+
+        var hasher = new PasswordHasher<ApiUser>();
+        modelBuilder.Entity<ApiUser>().HasData(
+            new ApiUser
+            {
+               Id = "f42d0bcc-b2f7-4900-a4c1-3507976f9166", 
+               Email = "admin@bookstore.com", 
+               NormalizedEmail = "ADMIN@BOOKSTORE.COM",
+               UserName = "admin@bookstore.com",
+               NormalizedUserName = "ADMIN@BOOKSTORE.COM",
+               FirstName = "Systerm", 
+               LastName = "Admin", 
+               PasswordHash = hasher.HashPassword(null, "P@ssword1")
+            },
+            new ApiUser
+            {
+                Id = "906a695a-cf80-4320-8ca0-ee1c12270618",
+                Email = "user@bookstore.com",
+                NormalizedEmail = "USER@BOOKSTORE.COM",
+                UserName = "user@bookstore.com",
+                NormalizedUserName = "USER@BOOKSTORE.COM",
+                FirstName = "Systerm",
+                LastName = "User",
+                PasswordHash = hasher.HashPassword(null, "P@ssword1")
+            }
+            );
+
+        modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+            new IdentityUserRole<string>
+            {
+                RoleId = "78713bd4-00af-4a34-97f7-c2953203208b", 
+                UserId = "906a695a-cf80-4320-8ca0-ee1c12270618",
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "207d3c67-4914-4cc7-8e18-00d4c786adc5",
+                UserId = "f42d0bcc-b2f7-4900-a4c1-3507976f9166",
+            }
+
+            );
 
         OnModelCreatingPartial(modelBuilder);
     }
