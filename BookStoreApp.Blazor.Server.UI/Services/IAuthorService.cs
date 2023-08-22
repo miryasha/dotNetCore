@@ -2,7 +2,7 @@
 
 namespace BookStoreApp.Blazor.Server.UI.Services
 {
-    public class BookService : BaseHttpService, IBookService
+    public interface IAuthorService
     {
         Task<Response<List<AuthorReadOnlyDto>>> Get();
         Task<Response<AuthorDetailsDto>> Get(int id);
