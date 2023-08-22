@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 
 namespace BookStoreApp.API.Models.Author
 {
@@ -7,10 +6,12 @@ namespace BookStoreApp.API.Models.Author
     {
         [Required]
         [StringLength(50)]
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
+
         [Required]
         [StringLength(50)]
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
+
         [StringLength(250)]
         public string? Bio { get; set; }
     }

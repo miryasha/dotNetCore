@@ -6,16 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BookStoreApp.API.Data;
-using Microsoft.Data.SqlClient;
 using BookStoreApp.API.Models.Author;
 using AutoMapper;
+using System.Collections;
 using BookStoreApp.API.Static;
+using Microsoft.AspNetCore.Authorization;
 using AutoMapper.QueryableExtensions;
 
 namespace BookStoreApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController : ControllerBase
     {
         private readonly BookStoreDbContext _context;
@@ -53,9 +55,9 @@ namespace BookStoreApp.API.Controllers
             try
             {
                 var author = await _context.Authors
-                   .Include(q => q.Books)
-                   .ProjectTo<AuthorDetailsDto>(mapper.ConfigurationProvider)
-                   .FirstOrDefaultAsync(q => q.Id == id);
+                    .Include(q => q.Books)
+                    .ProjectTo<AuthorDetailsDto>(mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(q => q.Id == id);
 
                 if (author == null)
                 {
@@ -75,6 +77,7 @@ namespace BookStoreApp.API.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutAuthor(int id, AuthorUpdateDto authorDto)
         {
             if (id != authorDto.Id)
@@ -117,6 +120,7 @@ namespace BookStoreApp.API.Controllers
         // POST: api/Authors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<AuthorCreateDto>> PostAuthor(AuthorCreateDto authorDto)
         {
             try
@@ -132,11 +136,12 @@ namespace BookStoreApp.API.Controllers
                 logger.LogError(ex, $"Error Performing POST in {nameof(PostAuthor)}", authorDto);
                 return StatusCode(500, Messages.Error500Message);
             }
-
+            
         }
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
             try

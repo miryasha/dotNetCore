@@ -29,7 +29,7 @@ namespace BookStoreApp.Blazor.Server.UI.Services
                 response = ConvertApiExceptions<int>(exception);
             }
 
-            return response;
+            return response; 
         }
 
         public async Task<Response<int>> Delete(int id)
@@ -132,4 +132,5 @@ namespace BookStoreApp.Blazor.Server.UI.Services
             return response;
         }
     }
+
 }

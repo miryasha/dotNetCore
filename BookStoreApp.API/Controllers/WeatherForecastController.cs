@@ -1,17 +1,15 @@
-﻿using BookStoreApp.API.Pages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreApp.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : Controller
+    public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
-
-           "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
@@ -19,29 +17,27 @@ namespace BookStoreApp.API.Controllers
         {
             _logger = logger;
         }
-        [HttpGet(Name ="GetWeatherForecast")]
 
+        [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogInformation("Made call to Wather Endpoint");
+            _logger.LogInformation("Made call to Weather Endpoint");
             try
             {
-                throw new Exception("This is our logging test exeption");
                 return Enumerable.Range(1, 5).Select(index => new WeatherForecast
                 {
-
                     Date = DateTime.Now.AddDays(index),
                     TemperatureC = Random.Shared.Next(-20, 55),
                     Summary = Summaries[Random.Shared.Next(Summaries.Length)]
                 })
                 .ToArray();
-
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Fatal Error Occurred");
                 throw;
             }
-           
+            
         }
     }
 }

@@ -35,9 +35,9 @@ namespace BookStoreApp.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register(UserDto userDto)
         {
-            logger.LogInformation($"Registration Attempt for {userDto.Email} ");
-            try
-            {
+            //logger.LogInformation($"Registration Attempt for {userDto.Email} ");
+            //try
+            //{
                 var user = mapper.Map<ApiUser>(userDto);
                 user.UserName = userDto.Email;
                 var result = await userManager.CreateAsync(user, userDto.Password);
@@ -51,14 +51,15 @@ namespace BookStoreApp.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                await userManager.AddToRoleAsync(user, "User");
+                //await userManager.AddToRoleAsync(user, "User");
+                await userManager.AddToRoleAsync(user, "Administrator");
                 return Accepted();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"Something Went Wrong in the {nameof(Register)}");
-                return Problem($"Something Went Wrong in the {nameof(Register)}", statusCode: 500);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.LogError(ex, $"Something Went Wrong in the {nameof(Register)}");
+            //    return Problem($"Something Went Wrong in the {nameof(Register)}", statusCode: 500);
+            //}
         }
 
         [HttpPost]

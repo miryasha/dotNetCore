@@ -29,6 +29,7 @@ namespace BookStoreApp.Blazor.Server.UI.Providers
 
             if(tokenContent.ValidTo < DateTime.Now)
             {
+                await localStorage.RemoveItemAsync("accessToken");
                 return new AuthenticationState(user);
             }
 
@@ -41,9 +42,6 @@ namespace BookStoreApp.Blazor.Server.UI.Providers
 
         public async Task LoggedIn()
         {
-            //var savedToken = await localStorage.GetItemAsync<string>("accessToken");
-            //var tokenContent = jwtSecurityTokenHandler.ReadJwtToken(savedToken);
-            //var calims = tokenContent.Claims;
             var claims = await GetClaims();
             var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
             var authState = Task.FromResult(new AuthenticationState(user));
